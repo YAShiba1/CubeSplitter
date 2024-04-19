@@ -8,7 +8,7 @@ public class CubeSplitter : MonoBehaviour
 
     private Ray _ray;
 
-    private float chanceOfSplitting = 1.0f;
+    private float _chanceOfSplitting = 1f;
 
     private void Update()
     {
@@ -28,15 +28,12 @@ public class CubeSplitter : MonoBehaviour
                 if (hitObject.TryGetComponent(out Cube cube))
                 {
                     _cubeSpawner.SetCubeScale(hitObject.transform.localScale);
+                    _chanceOfSplitting = hitObject.transform.localScale.x;
 
-                    if (Random.value <= chanceOfSplitting)
+                    if (Random.value <= _chanceOfSplitting)
                     {
-                        float half = 0.5f;
-
                         _cubeSpawner.RandomSpawn(hitObject.transform);
                         cube.Explode();
-
-                        chanceOfSplitting *= half;
                     }
 
                     cube.SelfDestroy(hitObject.transform);
